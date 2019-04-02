@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">Spinner</string>
+    <string name="state_prompt">Choose a states</string>
 
-   
+    <string-array name="state_arrays">
+    <item>Akwa Ibom</item>
+    <item>Calabar</item>
+    <item>Rivers</item>
+    <item>Kano</item>
+    <item>Kaduna</item>
+    <item>Enugu</item>
+    <item>Niger</item>
+    <item>Abuja</item>
+    </string-array>
 </resources>

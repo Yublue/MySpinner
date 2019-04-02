@@ -1,43 +1,69 @@
 package com.example.chydii.spinner;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    String[] Days = {"Monday", "Tuesday", " Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity  {
+
+    private Spinner spinner1, spinner2;
+    private Button submitbtn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Getting the instance of Sinner and applying OnItemSelectedListener on it
 
-        Spinner spin = (Spinner)findViewById(R.id.Spinner1);
-        spin.setOnItemSelectedListener(this);
-
-        //Creating the ArrayAdapter instance having the days list
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,Days);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //Setting the ArrayAdapter data on the Spinner
-        spin.setAdapter(arrayAdapter);
-    }
-    //Performing action onItemSelected and onNothing selected
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getApplicationContext(),Days[position], Toast.LENGTH_LONG).show();
-
+        addItemsOnSpinner2();
+        addListenerOnButton();
+        addListnerOnSpinnerItemSelected();
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    //ADD ITEMS INTO SPINNER DYNAMICALLY
 
+    public void addItemsOnSpinner2(){
 
+        spinner2 = (Spinner) findViewById(R.id.spinner2);
+        List<String> list = new ArrayList<String>();
+        list.add("list 1");
+        list.add("list 2");
+        list.add("list 3");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(dataAdapter);
+    }
+
+    public void addListnerOnSpinnerItemSelected(){
+        spinner1 = (Spinner) findViewById(R.id.Spinner1);
+        spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+    }
+    //get the selected dropdown list value
+
+    public void addListenerOnButton(){
+        spinner1=(Spinner)findViewById(R.id.Spinner1);
+        spinner2=(Spinner)findViewById(R.id.spinner2);
+        submitbtn=(Button)findViewById(R.id.submitbtn);
+
+        submitbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "OnClickListener :" +
+                        "\nSpinner 1 : " + String.valueOf(spinner1.getSelectedItem())+
+                        "\nSpinner 2 : " + String.valueOf(spinner2.getSelectedItem()),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
